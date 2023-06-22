@@ -59,7 +59,7 @@ def get_org_by_id(id):
 
 
 @app.route('/org/<uuid>', methods=['PUT'])
-def update_person(uuid):
+def update_org(uuid):
     req_data = request.form if request.form else request.json
 
     org = db.session.query(Organization).filter(Organization.org_id == uuid).first()

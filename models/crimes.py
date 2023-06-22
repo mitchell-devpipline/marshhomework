@@ -10,7 +10,8 @@ from db import db
 class Crimes(db.Model):
     __tablename__ = "Crimes"
     crime_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    people_id = db.Column(UUID(as_uuid=True), db.ForeignKey('People.people_id'), nullable=False)
+    person_id = db.Column(UUID(as_uuid=True), db.ForeignKey('People.person_id'), nullable=False)
+    cat_id = db.Column(UUID(as_uuid=True), db.ForeignKey('CrimeCategories.cat_id'), nullable=False)
     name = db.Column(db.String(), nullable=False)
 
     category = db.relationship('Category', backref=db.backref('Category', lazy=True))

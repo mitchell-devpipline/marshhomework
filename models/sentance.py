@@ -9,7 +9,7 @@ from db import db
 class Sentance(db.Model):
     __tablename__ = "Sentance"
     sentance_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    people_id = db.Column(UUID(as_uuid=True), db.ForeignKey('People.people_id'), nullable=False)
+    person_id = db.Column(UUID(as_uuid=True), db.ForeignKey('People.person_id'), nullable=False)
     crime_id = db.Column(UUID(as_uuid=True), db.ForeignKey('Crimes.crime_id'), nullable=False)
     prison_sentance = db.Column(db.Integer(), nullable=False)
     death_penalty = db.Column(db.Boolean(), default=True)
