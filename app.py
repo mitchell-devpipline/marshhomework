@@ -6,11 +6,13 @@ from flask_marshmallow import Marshmallow
 import controllers
 from models.people import People, person_schema, people_schema
 from models.organization import Organization, organization_schema, organizations_schema
-# from models.sentance import Sentance, sentance_schema, sentances_schema
+from models.sentance import Sentance, sentance_schema, sentances_schema
+from models.crimes import Crimes, crime_schema, crimes_schema
+from models.crime_categories import CrimeCategories, crimecat_schema, crimecats_schema
 
 database_pre = os.environ.get("DATABASE_PRE")
 database_addr = os.environ.get("DATABASE_ADDR")
-database_person = os.environ.get("DATABASE_person")
+database_person = os.environ.get("DATABASE_USER")
 database_port = os.environ.get("DATABASE_PORT")
 database_name = os.environ.get("DATABASE_NAME")
 

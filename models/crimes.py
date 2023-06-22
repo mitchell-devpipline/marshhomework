@@ -2,7 +2,7 @@ import uuid
 import marshmallow as ma
 from sqlalchemy.dialects.postgresql import UUID
 from models.people import PeopleSchema
-from models.crimes import CrimeSchema
+from models.crime_categories import CrimeCatSchema
 
 from db import db
 
@@ -25,7 +25,7 @@ class CrimeSchema(ma.Schema):
     class Meta:
         fields = ['crime_id', 'people_id', 'name', 'category', 'people']
     people = ma.fields.Nested(PeopleSchema(many=True))
-    crimes = ma.fields.Nested(CrimeSchema(many=True))
+    category = ma.fields.Nested(CrimeCatSchema(many=True))
 
 
 crime_schema = CrimeSchema()
