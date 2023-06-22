@@ -39,6 +39,15 @@ def add_organization():
     return controllers.add_organization()
 
 
+@app.route('/orgs/get', methods=['GET'])
+def get_all_active_orgs():
+    orgs = db.session.query(Organization).all()
+    if not orgs:
+        return jsonify("there are no orgs here"), 404
+    else:
+        return jsonify(organizations_schema.dump(orgs)), 200
+
+
 @app.route("/org/get/<id>", methods=["GET"])
 def get_org_by_id(id):
     org_record = db.session.query(Organization).filter(Organization.org_id == id).first()
@@ -49,13 +58,22 @@ def get_org_by_id(id):
     return jsonify(organization_schema.dump(org_record)), 200
 
 
-@app.route('/orgs/get', methods=['GET'])
-def get_all_active_orgs():
-    orgs = db.session.query(Organization).all()
-    if not orgs:
-        return jsonify("there are no orgs here"), 404
-    else:
-        return jsonify(organizations_schema.dump(orgs)), 200
+@app.route('/org/<uuid>', methods=['PUT'])
+def update_person(uuid):
+    req_data = request.form if request.form else request.json
+
+    org = db.session.query(Organization).filter(Organization.org_id == uuid).first()
+
+    if not org:
+        return jsonify("The organization doesn't exist"), 404
+
+    for field in req_data.keys():
+        if getattr(org, field):
+            setattr(org, field, req_data[field])
+
+    db.session.commit()
+
+    return jsonify("Organization Updated.")
 
 
 @app.route("/org/delete/<id>", methods=["DELETE"])
@@ -72,7 +90,7 @@ def del_org_by_id(id):
     return jsonify("Organization Deleted"), 200
 
 
-# Person
+# People
 
 @app.route('/person/add', methods=["POST"])
 def add_person():
@@ -127,6 +145,9 @@ def del_person_by_id(id):
         db.session.commit()
 
     return jsonify("person Has been Deleted"), 200
+
+
+# Sentance
 
 
 if __name__ == "__main__":
